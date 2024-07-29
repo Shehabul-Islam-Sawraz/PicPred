@@ -2,3 +2,8 @@
 picpred_backend/Lib
 picpred_backend/Scripts
 picpred_backend/pyvenv.cfg
+picpred_backend/src/db.*
+picpred_backend/src/picpred/__pycache__/
+picpred_backend/media_root
+picpred_backend/src/images/__pycache__/
+picpred_backend/src/images/migrations/
