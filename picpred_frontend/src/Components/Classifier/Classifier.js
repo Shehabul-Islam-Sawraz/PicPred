@@ -1,14 +1,30 @@
 import React, { useState } from 'react';
 import Dropzone from 'react-dropzone';
-import { useDropzone } from 'react-dropzone';
+import { Spinner } from 'react-bootstrap'
 import './Classifier.css'
 
 const Classifier = () => {
-    const [files, setFiles] = useState(null)
+    const [files, setFiles] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const onDrop = (files) => {
         const filteredFiles = files.filter(file => file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg');
-        setFiles(filteredFiles)
+        if (filteredFiles.length) {
+            // setFiles(filteredFiles)
+            setLoading(true)
+            loadImage(filteredFiles)
+        }
+        else {
+            setFiles([])
+            setLoading(false)
+        }
+    }
+
+    const loadImage = (files) => {
+        setTimeout(() => {
+            setFiles(files)
+            setLoading(false)
+        }, 1000);
     }
 
     const filesList = files && files.map(file => {
@@ -31,6 +47,12 @@ const Classifier = () => {
                         <h4>Files</h4>
                         <ul>{filesList}</ul>
                     </aside>
+                    {loading && files &&
+                        <Spinner animation="border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                    }
+
                 </section>
             )}
         </Dropzone >
