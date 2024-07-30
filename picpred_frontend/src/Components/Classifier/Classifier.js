@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dropzone from 'react-dropzone';
 import { Spinner } from 'react-bootstrap'
 import './Classifier.css'
+import axios from 'axios'
 
 const Classifier = () => {
     const [files, setFiles] = useState([])
     const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        getImages()
+    }, [])
+
+    const getImages = () => {
+        axios.get('http://127.0.0.1:8000/api/images/', {
+            headers: {
+                'accept': 'application/json'
+            }
+        }).then(res => {
+            console.log(res)
+        })
+    }
 
     const onDrop = (files) => {
         const filteredFiles = files.filter(file => file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg');
@@ -41,11 +56,11 @@ const Classifier = () => {
                 <section>
                     <div {...getRootProps({ className: 'dropzone back' })}>
                         <input {...getInputProps()} />
-                        <p>{isDragActive ? "Drop the files" : "Drag 'n' drop some files here, or click to select files"}</p>
+                        <i className="far fa-image mb-2 text-muted" style={{ fontSize: 100 }}></i>
+                        <p className='text-muted'>{isDragActive ? "Drop the files" : "Drag 'n' drop some files here, or click to select files"}</p>
                     </div>
                     <aside>
-                        <h4>Files</h4>
-                        <ul>{filesList}</ul>
+                        {filesList}
                     </aside>
                     {loading && files &&
                         <Spinner animation="border" role="status">
