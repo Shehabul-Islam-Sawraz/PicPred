@@ -1,4 +1,4 @@
-1. Inside root folder:
+1. Inside root folder: (For backend)
    - $ virtualenv picpred_backend
    - $ cd picpred_backend
    - $ Scripts\activate 
@@ -11,3 +11,11 @@
       - $ python manage.py startapp images
       - $ python manage.py migrate
       - $ python manage.py createsuperuser
+4. Inside root folder: (For frontend)
+   - If in virtual environment, run below to exit from it:
+       - $ deactivate
+   - $ npx create-react-app picpred_frontend
+   - $ cd picpred_frontend
+   - $ npm install react-bootstrap bootstrap
+   - $ npm install --save react-dropzone
+   - $ npm i axios

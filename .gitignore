@@ -7,3 +7,29 @@ picpred_backend/src/picpred/__pycache__/
 picpred_backend/media_root
 picpred_backend/src/images/__pycache__/
 picpred_backend/src/images/migrations/
+
+
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+picpred_frontend/node_modules
+picpred_frontend/.pnp
+picpred_frontend/.pnp.js
+
+# testing
+picpred_frontend/coverage
+
+# production
+picpred_frontend/build
+
+# misc
+picpred_frontend/.DS_Store
+picpred_frontend/.env.local
+picpred_frontend/.env.development.local
+picpred_frontend/.env.test.local
+picpred_frontend/.env.production.local
+
+picpred_frontend/npm-debug.log*
+picpred_frontend/yarn-debug.log*
+picpred_frontend/yarn-error.log*

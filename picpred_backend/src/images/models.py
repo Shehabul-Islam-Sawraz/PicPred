@@ -8,3 +8,10 @@ class Image(models.Model):
     
     def __str__(self):
         return "Image classified at {}".format(self.uploaded.strftime("%d-%m-%Y %H:%M"))
+    
+    def save(self, *args, **kwargs):
+        try:
+            print('Success')
+        except:
+            print('Classification Failed!!')
+        super().save(*args, **kwargs)
