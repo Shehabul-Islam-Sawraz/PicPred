@@ -53,6 +53,8 @@ const Classifier = () => {
             }
         }).then(res => {
             console.log(res)
+        }).catch(err => {
+            console.log("Sending image to data error: " + err)
         })
     }
 
