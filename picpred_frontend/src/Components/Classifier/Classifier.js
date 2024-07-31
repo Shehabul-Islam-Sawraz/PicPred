@@ -43,7 +43,17 @@ const Classifier = () => {
         }, 1000);
     }
 
+    const actiateSpinner = () => {
+        setFiles([])
+        setLoading(true)
+    }
+
+    const deactivateSpinner = () => {
+        setLoading(false)
+    }
+
     const sendImage = () => {
+        actiateSpinner()
         let formData = new FormData()
         formData.append('picture', files[0], files[0].name)
         axios.post('http://127.0.0.1:8000/api/images/', formData, {
@@ -69,6 +79,7 @@ const Classifier = () => {
         }).catch(err => {
             console.log("Getting Image Error: " + err)
         })
+        deactivateSpinner()
     }
 
     const filesList = files && files.map(file => {
