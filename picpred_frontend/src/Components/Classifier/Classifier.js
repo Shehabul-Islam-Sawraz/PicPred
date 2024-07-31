@@ -52,9 +52,22 @@ const Classifier = () => {
                 'content-type': 'multipart/form-data',
             }
         }).then(res => {
-            console.log(res)
+            getImageClass(res)
+            console.log(res.data.id)
         }).catch(err => {
             console.log("Sending image to data error: " + err)
+        })
+    }
+
+    const getImageClass = (obj) => {
+        axios.get(`http://127.0.0.1:8000/api/images/${obj.data.id}/`, {
+            headers: {
+                'accept': 'application/json'
+            }
+        }).then(res => {
+            console.log(res)
+        }).catch(err => {
+            console.log("Getting Image Error: " + err)
         })
     }
 
