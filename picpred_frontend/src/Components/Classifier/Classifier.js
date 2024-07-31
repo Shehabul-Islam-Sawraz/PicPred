@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Dropzone from 'react-dropzone';
-import { Spinner } from 'react-bootstrap'
+import { Button, Spinner } from 'react-bootstrap'
 import './Classifier.css'
 import axios from 'axios'
 
@@ -8,23 +8,24 @@ const Classifier = () => {
     const [files, setFiles] = useState([])
     const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
-        getImages()
-    }, [])
+    // useEffect(() => {
+    //     getImages()
+    // }, [])
 
-    const getImages = () => {
-        axios.get('http://127.0.0.1:8000/api/images/', {
-            headers: {
-                'accept': 'application/json'
-            }
-        }).then(res => {
-            console.log(res)
-        })
-    }
+    // const getImages = () => {
+    //     axios.get('http://127.0.0.1:8000/api/images/', {
+    //         headers: {
+    //             'accept': 'application/json'
+    //         }
+    //     }).then(res => {
+    //         console.log(res)
+    //     })
+    // }
 
     const onDrop = (files) => {
         const filteredFiles = files.filter(file => file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg');
         if (filteredFiles.length) {
+            console.log(filteredFiles[0].name)
             // setFiles(filteredFiles)
             setLoading(true)
             loadImage(filteredFiles)
@@ -40,6 +41,19 @@ const Classifier = () => {
             setFiles(files)
             setLoading(false)
         }, 1000);
+    }
+
+    const sendImage = () => {
+        let formData = new FormData()
+        formData.append('picture', files[0], files[0].name)
+        axios.post('http://127.0.0.1:8000/api/images/', formData, {
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'multipart/form-data',
+            }
+        }).then(res => {
+            console.log(res)
+        })
     }
 
     const filesList = files && files.map(file => {
@@ -62,7 +76,13 @@ const Classifier = () => {
                     <aside>
                         {filesList}
                     </aside>
-                    {loading && files &&
+                    {
+                        files.length > 0 &&
+                        <Button variant='info' size='lg' className='mt-3' onClick={sendImage}>Select Image</Button>
+                    }
+
+                    {
+                        loading &&
                         <Spinner animation="border" role="status">
                             <span className="visually-hidden">Loading...</span>
                         </Spinner>
