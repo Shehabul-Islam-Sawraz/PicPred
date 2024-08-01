@@ -2,7 +2,6 @@ from django.db import models
 from keras_preprocessing.image import load_img, img_to_array
 import numpy as np
 from tensorflow.keras.applications.inception_resnet_v2 import InceptionResNetV2, decode_predictions, preprocess_input
-from PIL import Image
 
 # Create your models here.
 class Image(models.Model):

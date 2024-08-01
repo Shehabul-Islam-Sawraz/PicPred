@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Dropzone from 'react-dropzone';
-import { Button, Spinner } from 'react-bootstrap'
+import { Alert, Button, Image, Spinner } from 'react-bootstrap'
 import './Classifier.css'
 import axios from 'axios'
 
 const Classifier = () => {
     const [files, setFiles] = useState([])
     const [loading, setLoading] = useState(false)
+    const [recentImage, setRecentImage] = useState(null)
 
     // useEffect(() => {
     //     getImages()
@@ -25,14 +26,17 @@ const Classifier = () => {
     const onDrop = (files) => {
         const filteredFiles = files.filter(file => file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg');
         if (filteredFiles.length) {
-            console.log(filteredFiles[0].name)
+            // console.log(filteredFiles[0].name)
             // setFiles(filteredFiles)
+            setFiles([])
+            setRecentImage(null)
             setLoading(true)
             loadImage(filteredFiles)
         }
         else {
             setFiles([])
             setLoading(false)
+            setRecentImage(null)
         }
     }
 
@@ -55,6 +59,8 @@ const Classifier = () => {
     const sendImage = () => {
         actiateSpinner()
         let formData = new FormData()
+        console.log("Filename: " + files[0].name)
+        console.log(files[0])
         formData.append('picture', files[0], files[0].name)
         axios.post('http://127.0.0.1:8000/api/images/', formData, {
             headers: {
@@ -75,6 +81,7 @@ const Classifier = () => {
                 'accept': 'application/json'
             }
         }).then(res => {
+            setRecentImage(res)
             console.log(res)
         }).catch(err => {
             console.log("Getting Image Error: " + err)
@@ -112,6 +119,16 @@ const Classifier = () => {
                         <Spinner animation="border" role="status">
                             <span className="visually-hidden">Loading...</span>
                         </Spinner>
+                    }
+
+                    {
+                        recentImage &&
+                        <React.Fragment>
+                            <Alert variant='primary'>
+                                {recentImage.data.classified}
+                            </Alert>
+                            <Image className='justify-content-center' src={recentImage.data.picture} height='200' rounded />
+                        </React.Fragment>
                     }
 
                 </section>
