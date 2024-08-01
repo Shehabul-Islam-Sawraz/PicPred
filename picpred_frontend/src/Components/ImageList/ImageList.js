@@ -8,6 +8,7 @@ const ImageList = () => {
     const [visible, setVisible] = useState(2)
     const [loading, setLoading] = useState(true)
     const [loadNew, setLoadNew] = useState(false)
+    const [status, setStatus] = useState(false)
 
     useEffect(() => {
         setTimeout(getImages, 1500);
@@ -20,6 +21,7 @@ const ImageList = () => {
             }
         }).then(res => {
             setImages(res.data)
+            setStatus(true)
             console.log(res)
         })
         setLoading(false)
@@ -43,21 +45,33 @@ const ImageList = () => {
     return (
         <div>
             <h1 className="mt-3"> Image List</h1>
-            {
-                loading &&
-                <Spinner animation="border" role="status" className="mt-2"></Spinner>
-            }
-
-            {imagesList}
 
             {
-                loadNew &&
-                <Spinner animation="border" role="status" className="mt-2"></Spinner>
-            }
+                loading
+                    ?
+                    <Spinner animation="border" role="status" className="mt-2"></Spinner>
+                    :
+                    <React.Fragment>
+                        {
+                            images.length === 0 && status && <h3>No images classified!</h3>
+                        }
 
-            {
-                !loading && !loadNew &&
-                <Button className="mb-4 mt-2" variant="primary" size="lg" onClick={handleVisible}>Load More</Button>
+                        {imagesList}
+
+                        {
+                            loadNew &&
+                            <Spinner animation="border" role="status" className="mt-2"></Spinner>
+                        }
+
+                        {
+                            !loading && !loadNew && (images.length > visible) && (images.length > 2) &&
+                            <Button className="mb-4 mt-2" variant="primary" size="lg" onClick={handleVisible}>Load More</Button>
+                        }
+
+                        {
+                            (images.length <= visible) && (images.length > 0) && <h3>No more images to load!!</h3>
+                        }
+                    </React.Fragment>
             }
         </div>
     );
