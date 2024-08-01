@@ -9,20 +9,6 @@ const Classifier = () => {
     const [loading, setLoading] = useState(false)
     const [recentImage, setRecentImage] = useState(null)
 
-    // useEffect(() => {
-    //     getImages()
-    // }, [])
-
-    // const getImages = () => {
-    //     axios.get('http://127.0.0.1:8000/api/images/', {
-    //         headers: {
-    //             'accept': 'application/json'
-    //         }
-    //     }).then(res => {
-    //         console.log(res)
-    //     })
-    // }
-
     const onDrop = (files) => {
         const filteredFiles = files.filter(file => file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg');
         if (filteredFiles.length) {
