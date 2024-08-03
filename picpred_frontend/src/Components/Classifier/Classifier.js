@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Dropzone from 'react-dropzone';
 import { Alert, Button, Image, Spinner } from 'react-bootstrap'
 import './Classifier.css'
@@ -12,8 +12,6 @@ const Classifier = () => {
     const onDrop = (files) => {
         const filteredFiles = files.filter(file => file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg');
         if (filteredFiles.length) {
-            // console.log(filteredFiles[0].name)
-            // setFiles(filteredFiles)
             setFiles([])
             setRecentImage(null)
             setLoading(true)

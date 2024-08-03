@@ -69,7 +69,7 @@ const ImageList = () => {
                         }
 
                         {
-                            (images.length <= visible) && (images.length > 0) && <h3>No more images to load!!</h3>
+                            (images.length <= visible) && (images.length > 0) && <h3 className="mb-3">No more images to load!!</h3>
                         }
                     </React.Fragment>
             }

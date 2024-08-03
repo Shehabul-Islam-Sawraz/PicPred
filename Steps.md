@@ -19,3 +19,5 @@
    - $ npm install react-bootstrap bootstrap
    - $ npm install --save react-dropzone
    - $ npm i axios
+   - $ npm i --save react-router-dom
+   - $ npm i --save react-router
